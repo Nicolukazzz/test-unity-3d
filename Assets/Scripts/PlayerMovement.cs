@@ -17,9 +17,21 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     public float airFriction = 0.98f; // Fricción en el aire cuando sueltas la tecla (más bajo = pierde velocidad más rápido)
     public float airControlLerp = 0.1f; // Control en el aire (más alto = más responsivo)
-
+                                        // NUEVO: bandera para desactivar movimiento
+    public bool canMove = true;
+    
     void Update()
     {
+
+        if (!canMove)
+        {
+            // si está bloqueado, cancelar inputs y gravedad
+            moveDirection = Vector3.zero;
+            velocity = Vector3.zero;
+            animator.SetFloat("moveSpeed", 0);
+            return; // salimos del Update
+        }
+
         // Verificar si el jugador está en el suelo
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) || controller.isGrounded;
 

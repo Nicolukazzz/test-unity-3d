@@ -6,6 +6,7 @@ public class PlayerCamera : MonoBehaviour
     public Transform playerBody; // Referencia al cuerpo del jugador
 
     private float xRotation = 0f;
+    public bool canLook = true;
 
     void Start()
     {
@@ -15,6 +16,10 @@ public class PlayerCamera : MonoBehaviour
 
     void Update()
     {
+        if (!canLook)
+        {
+            return; // Si no puede mirar, salir del Update
+        }
         // Obtener la entrada del mouse
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
